@@ -7,6 +7,20 @@ import claim._
 
 import Generators._
 object ClaimSpec extends Properties("Claim") {
+  property("generated registered claims are valid") = forAll(genRegisteredClaim) {
+    c: Claim =>
+      c match {
+        case IssuerClaim(_) => c.isValid
+        case SubjectClaim(_) => c.isValid
+        case AudienceClaim(_) => c.isValid
+        case ExpirationTimeClaim(_) => c.isValid
+        case NotBeforeClaim(_) => c.isValid
+        case IssuedAtClaim(_) => c.isValid
+        case JwtIdClaim(_) => c.isValid
+        case _ => false
+      }
+  }
+
   property("issuer claim accepts stringOrUri") = forAll {
     s: String =>
       !s.contains(':') ==> IssuerClaim(s).isValid
