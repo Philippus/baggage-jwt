@@ -34,6 +34,16 @@ object ClaimSpec extends Properties("Claim") {
       l.forall(!_.contains(':')) ==> AudienceClaim(l).isValid
   }
 
+  property("expiration time claim accepts numbers >= 0") = forAll {
+    l: Long =>
+      (l >= 0) ==> ExpirationTimeClaim(l).isValid
+  }
+
+  property("not before claim accepts numbers >= 0") = forAll {
+    l: Long =>
+      (l >= 0) ==> NotBeforeClaim(l).isValid
+  }
+
   property("issued at claim accepts numbers >= 0") = forAll {
     l: Long =>
       (l >= 0) ==> IssuedAtClaim(l).isValid
