@@ -21,7 +21,6 @@ libraryDependencies += "nl.gn0s1s" %% "baggage-jwt" % "0.1.0"
 
 *TODO*:
 - write README
-- processing claims
 
 ## Example usage
 
