@@ -4,9 +4,7 @@ package claim
 import java.net.URI
 import scala.util.Try
 
-abstract class Claim(name: String, value: Any) {
-  def getName: String = name
-  def getValue: Any = value
+abstract class Claim(val name: String, val value: Any) {
   def isValid: Boolean
 }
 
@@ -24,11 +22,11 @@ trait NumericDate {
 
 abstract class RegisteredClaim(name: String, value: Any) extends Claim(name, value)
 
-case class IssuerClaim(value: String) extends RegisteredClaim("iss", value) with StringOrUri // stringOrURI
+case class IssuerClaim(override val value: String) extends RegisteredClaim("iss", value) with StringOrUri // stringOrURI
 
-case class SubjectClaim(value: String) extends RegisteredClaim("sub", value) with StringOrUri // stringOrURI
+case class SubjectClaim(override val value: String) extends RegisteredClaim("sub", value) with StringOrUri // stringOrURI
 
-case class AudienceClaim(value: Any) extends RegisteredClaim("aud", value) { // stringOrUri or array of stringOrUri
+case class AudienceClaim(override val value: Any) extends RegisteredClaim("aud", value) { // stringOrUri or array of stringOrUri
   def isValid: Boolean = {
     def stringOrUri(value: String): Boolean = !value.exists(_ == ':') || Try(new URI(value)).isSuccess
 
@@ -40,21 +38,21 @@ case class AudienceClaim(value: Any) extends RegisteredClaim("aud", value) { // 
   }
 }
 
-case class ExpirationTimeClaim(value: Long) extends RegisteredClaim("exp", value) with NumericDate // number containing NumericDate
+case class ExpirationTimeClaim(override val value: Long) extends RegisteredClaim("exp", value) with NumericDate // number containing NumericDate
 
-case class NotBeforeClaim(value: Long) extends RegisteredClaim("nbf", value) with NumericDate // number containing NumericDate
+case class NotBeforeClaim(override val value: Long) extends RegisteredClaim("nbf", value) with NumericDate // number containing NumericDate
 
-case class IssuedAtClaim(value: Long) extends RegisteredClaim("iat", value) with NumericDate // number containing NumericDate
+case class IssuedAtClaim(override val value: Long) extends RegisteredClaim("iat", value) with NumericDate // number containing NumericDate
 
-case class JwtIdClaim(value: String) extends RegisteredClaim("jti", value) { // string
+case class JwtIdClaim(override val value: String) extends RegisteredClaim("jti", value) { // string
   def isValid = true
 }
 
-case class PublicClaim(name: String, value: Any) extends Claim(name, value) {
+case class PublicClaim(override val name: String, override val value: Any) extends Claim(name, value) {
   def isValid = true
 }
 
-case class PrivateClaim(name: String, value: Any) extends Claim(name, value) {
+case class PrivateClaim(override val name: String, override val value: Any) extends Claim(name, value) {
   def isValid = true
 }
 
