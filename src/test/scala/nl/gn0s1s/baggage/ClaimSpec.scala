@@ -1,18 +1,25 @@
 package nl.gn0s1s.baggage
 
 import org.scalacheck._
-import org.scalacheck.Gen.oneOf
 import org.scalacheck.Prop.{ forAll, BooleanOperators }
 
 import claim._
 
+import Generators._
 object ClaimSpec extends Properties("Claim") {
-  def genRegisteredClaim: Gen[Claim] = for {
-    claimName <- oneOf(List("iss", "sub", "aud", "jti", "exp", "nbf", "iat"))
-    claimValue <- if (List("iss", "sub", "aud", "jti").contains(claimName)) Gen.alphaNumStr else Gen.posNum[Int]
-  } yield Claim(claimName, claimValue)
-
-  implicit val arbitraryClaim: Arbitrary[Claim] = Arbitrary(genRegisteredClaim)
+  property("generated registered claims are valid") = forAll(genRegisteredClaim) {
+    c: Claim =>
+      c match {
+        case IssuerClaim(_) => c.isValid
+        case SubjectClaim(_) => c.isValid
+        case AudienceClaim(_) => c.isValid
+        case ExpirationTimeClaim(_) => c.isValid
+        case NotBeforeClaim(_) => c.isValid
+        case IssuedAtClaim(_) => c.isValid
+        case JwtIdClaim(_) => c.isValid
+        case _ => false
+      }
+  }
 
   property("issuer claim accepts stringOrUri") = forAll {
     s: String =>
@@ -52,5 +59,15 @@ object ClaimSpec extends Properties("Claim") {
   property("jwt id claim accepts strings") = forAll {
     s: String =>
       JwtIdClaim(s).isValid
+  }
+
+  property("public claims are always valid") = forAll {
+    (s: String, a: AnyVal) =>
+      PublicClaim(s, a).isValid
+  }
+
+  property("private claims are always valid") = forAll {
+    (s: String, a: AnyVal) =>
+      PrivateClaim(s, a).isValid
   }
 }
