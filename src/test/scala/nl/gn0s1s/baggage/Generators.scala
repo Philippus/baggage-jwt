@@ -22,7 +22,11 @@ object Generators {
 
   def genRegisteredClaim: Gen[Claim] = for {
     claimName <- oneOf(List("iss", "sub", "aud", "exp", "nbf", "iat", "jti"))
-    claimValue <- if (List("iss", "sub", "aud", "jti").contains(claimName)) Gen.alphaNumStr else Gen.posNum[Int]
+    claimValue <- claimName match {
+      case "iss" | "sub" | "jti" => Gen.alphaStr
+      case "aud" => Gen.frequency((4, Gen.alphaStr), (1, Gen.listOf(Gen.alphaStr)))
+      case "exp" | "nbf" | "iat" => Gen.posNum[Int]
+    }
   } yield Claim(claimName, claimValue)
 
   def genKey: Gen[Key] = for {
