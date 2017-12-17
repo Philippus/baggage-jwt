@@ -32,7 +32,10 @@ case class AudienceClaim(override val value: Any) extends RegisteredClaim("aud",
 
     value match {
       case s: String => stringOrUri(s)
-      case l: List[Any] => l.forall({ case (s: String) => stringOrUri(s) })
+      case l: List[Any] => l.forall({
+        case s: String => stringOrUri(s)
+        case _ => false
+      })
       case _ => false
     }
   }

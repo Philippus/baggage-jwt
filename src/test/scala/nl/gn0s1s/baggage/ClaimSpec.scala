@@ -41,6 +41,16 @@ object ClaimSpec extends Properties("Claim") {
       l.forall(!_.contains(':')) ==> AudienceClaim(l).isValid
   }
 
+  property("audience claim rejects non-stringOrUri's") = forAll {
+    i: Int =>
+      !AudienceClaim(i).isValid
+  }
+
+  property("audience claim rejects several non-stringOrUri's") = forAll {
+    l: List[Int] =>
+      l.nonEmpty ==> !AudienceClaim(l).isValid
+  }
+
   property("expiration time claim accepts numbers >= 0") = forAll {
     l: Long =>
       (l >= 0) ==> ExpirationTimeClaim(l).isValid
