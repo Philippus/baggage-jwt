@@ -1,7 +1,7 @@
 # Baggage JWT
 
-[![Build Status](https://travis-ci.org/Philippus/baggage.svg?branch=master)](https://travis-ci.org/Philippus/my-jwt)
-[![codecov](https://codecov.io/gh/Philippus/baggage/branch/master/graph/badge.svg)](https://codecov.io/gh/Philippus/my-jwt)
+[![Build Status](https://travis-ci.org/Philippus/baggage-jwt.svg?branch=master)](https://travis-ci.org/Philippus/baggage-jwt)
+[![codecov](https://codecov.io/gh/Philippus/baggage-jwt/branch/master/graph/badge.svg)](https://codecov.io/gh/Philippus/baggage-jwt)
 ![Current Version](https://img.shields.io/badge/version-0.1.0-brightgreen.svg?style=flat "0.1.0")
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=flat "BSD 3-Clause")](LICENSE.md)
 
