@@ -60,4 +60,14 @@ object ClaimSpec extends Properties("Claim") {
     s: String =>
       JwtIdClaim(s).isValid
   }
+
+  property("public claims are always valid") = forAll {
+    (s: String, a: AnyVal) =>
+      PublicClaim(s, a).isValid
+  }
+
+  property("private claims are always valid") = forAll {
+    (s: String, a: AnyVal) =>
+      PrivateClaim(s, a).isValid
+  }
 }
