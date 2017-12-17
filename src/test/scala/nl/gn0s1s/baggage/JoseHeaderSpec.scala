@@ -24,8 +24,17 @@ object JoseHeaderSpec extends Properties("JoseHeader") {
     header: JoseHeader =>
       codec.JwtCodec.encodeHeader(header).isSuccess
   }
+
   property("can be encoded then decoded") = forAll {
     header: JoseHeader =>
       codec.JwtCodec.encodeHeader(header).flatMap(codec.JwtCodec.decodeHeader).isSuccess
+  }
+
+  property("fails decoding if algorithm is not supported") = {
+    codec.JwtCodec.decodeHeader("eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9").isFailure
+  }
+
+  property("fails decoding if algorithm is not a string") = {
+    codec.JwtCodec.decodeHeader("eyJhbGciOjEyMzQ1LCJ0eXAiOiJKV1QifQ").isFailure
   }
 }
