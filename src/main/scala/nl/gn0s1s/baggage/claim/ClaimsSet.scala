@@ -11,6 +11,6 @@ object ClaimsSet {
   }
 
   def claimsSetToMap(set: Set[Claim]): ClaimsMap = {
-    set.map(claim => claim.getName -> claim.getValue).toMap
+    set.map(claim => claim.name -> claim.value).toMap
   }
 }
