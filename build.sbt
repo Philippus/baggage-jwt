@@ -1,6 +1,6 @@
 name := "baggage-jwt"
 organization := "nl.gn0s1s"
-version := "0.1.0-SNAPSHOT"
+version := "0.1.0"
 startYear := Some(2017)
 homepage := Some(url("https://github.com/philippus/baggage-jwt"))
 licenses += ("BSD 3-Clause", url("http://opensource.org/licenses/BSD-3-Clause"))
