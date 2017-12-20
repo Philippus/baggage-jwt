@@ -101,9 +101,22 @@ object ClaimSpec extends Properties("Claim") {
     }
   }
 
-  property("processor fails if audience claim does not match audience claim in set") = {
+  property("processor fails if audience claim does not match audience claim in set - list") = {
     val claims = Set[Claim](AudienceClaim(List("public", "private")))
     ClaimsProcessor.process(claims, Set.empty[String], Set(AudienceClaim("exclusive")), Duration.ZERO) match {
+      case Failure(x: IllegalArgumentException) => x.getMessage == "Audience claim does not match audience claim in set"
+      case _ => false
+    }
+  }
+
+  property("processor succeeds if audience claim does not match audience claim in set - list") = {
+    val claims = Set[Claim](AudienceClaim(List("public", "private")))
+    ClaimsProcessor.process(claims, Set.empty[String], Set(AudienceClaim("public")), Duration.ZERO).isSuccess
+  }
+
+  property("processor fails if audience claim does not match audience claim in set") = {
+    val claims = Set[Claim](AudienceClaim("private"))
+    ClaimsProcessor.process(claims, Set.empty[String], Set(AudienceClaim("public")), Duration.ZERO) match {
       case Failure(x: IllegalArgumentException) => x.getMessage == "Audience claim does not match audience claim in set"
       case _ => false
     }
