@@ -83,7 +83,12 @@ To validate a token the method `JsonWebToken.validate` can be used, it requires:
 val jwt = res0.get
 JsonWebToken.validate(jwt.toString, HS256, Key("secret".getBytes))
 // res5: Boolean = true
+```
 
+Alternatively the JsonWebToken case class itself also has a `validate`-method:
+```scala
+jwt.validate(HS384, Key("secret".getBytes))
+// res6: Boolean = false
 ```
 ### Processing claims
 Most likely you want to write your own claims processor, but an example of a claims processor
@@ -95,12 +100,13 @@ Most likely you want to write your own claims processor, but an example of a cla
 
 The result is a `Success` containing the claims, or a `Failure` containing an appropriate exception.
 
+To get the claims from a jwt, there is a `claimsOption`-method available on the JsonWebToken case class (returning an `Option[ClaimsSet]`):
 ```scala
-val claims = jwt.decode.get._2
+val claims = jwt.claimsOption.get
 ClaimsProcessor.process(claims, Set("sub", "name", "admin"), Set(PrivateClaim("admin", true)), java.time.Duration.ZERO)
-// res6: scala.util.Try[nl.gn0s1s.baggage.claim.ClaimsSet.ClaimsSet] = Success(Set(SubjectClaim(1234567890), PublicClaim(name,John Doe), PrivateClaim(admin,true)))
+// res7: scala.util.Try[nl.gn0s1s.baggage.claim.ClaimsSet.ClaimsSet] = Success(Set(SubjectClaim(1234567890), PublicClaim(name,John Doe), PrivateClaim(admin,true)))
 ClaimsProcessor.process(claims, Set("sub", "name", "admin", "iat"), Set(PrivateClaim("admin", true)), java.time.Duration.ZERO)
-// res7: scala.util.Try[nl.gn0s1s.baggage.claim.ClaimsSet.ClaimsSet] = Failure(java.lang.IllegalArgumentException: Not all required claim names present in claims set)
+// res8: scala.util.Try[nl.gn0s1s.baggage.claim.ClaimsSet.ClaimsSet] = Failure(java.lang.IllegalArgumentException: Not all required claim names present in claims set)
 ```
 ## References
  - [RFC 7519](https://tools.ietf.org/html/rfc7519)
