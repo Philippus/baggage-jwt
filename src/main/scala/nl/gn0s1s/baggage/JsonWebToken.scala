@@ -9,6 +9,8 @@ import codec.JwtCodec._
 case class JsonWebToken(encodedHeader: String, encodedPayload: String, encodedSignature: String) {
   override def toString = s"$encodedHeader.$encodedPayload.$encodedSignature"
 
+  lazy val claimsOption: Option[ClaimsSet] = this.decode.map(_._2).toOption
+
   def decode: Try[(JoseHeader, ClaimsSet, String)] = {
     for {
       header <- decodeHeader(encodedHeader)
