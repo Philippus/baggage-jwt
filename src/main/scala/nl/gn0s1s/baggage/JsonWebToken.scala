@@ -15,6 +15,8 @@ case class JsonWebToken(encodedHeader: String, encodedPayload: String, encodedSi
       claims <- decodePayload(encodedPayload)
     } yield (header, claims, encodedSignature)
   }
+
+  def validate(alg: Algorithm, secretKey: Key): Boolean = JsonWebToken.validate(this.toString, alg, secretKey)
 }
 
 object JsonWebToken {
