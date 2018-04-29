@@ -15,7 +15,7 @@ useJCenter := true
 
 libraryDependencies ++= Seq(
   "co.blocke" %% "scalajack" % "5.0.8",
-  "org.scalacheck" %% "scalacheck" % "1.13.5" % Test
+  "org.scalacheck" %% "scalacheck" % "1.14.0" % Test
 )
 
 pomExtra :=
