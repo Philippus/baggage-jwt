@@ -5,7 +5,7 @@ startYear := Some(2017)
 homepage := Some(url("https://github.com/philippus/baggage-jwt"))
 licenses += ("BSD 3-Clause", url("http://opensource.org/licenses/BSD-3-Clause"))
 
-crossScalaVersions := List("2.11.12", "2.12.4")
+crossScalaVersions := List("2.11.12", "2.12.6")
 scalaVersion := crossScalaVersions.value.last
 
 bintrayOrganization := Some("gn0s1s")
