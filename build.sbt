@@ -14,7 +14,7 @@ bintrayRepository := "releases"
 useJCenter := true
 
 libraryDependencies ++= Seq(
-  "co.blocke" %% "scalajack" % "5.0.9",
+  "co.blocke" %% "scalajack" % "5.0.10",
   "org.scalacheck" %% "scalacheck" % "1.14.0" % Test
 )
 
