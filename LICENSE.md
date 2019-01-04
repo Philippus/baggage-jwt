@@ -1,6 +1,6 @@
 BSD 3-Clause License
 
-Copyright (c) 2017-2018, Philippus Baalman
+Copyright (c) 2017-2019, Philippus Baalman
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
