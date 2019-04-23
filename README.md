@@ -9,7 +9,7 @@ Baggage JWT is an implementation of [RFC 7519](https://tools.ietf.org/html/rfc75
 specification closely.
 
 ## Installation
-Baggage JWT is published for Scala 2.11 and 2.12, but requires Java 8. Add the following to your `build.sbt`:
+Baggage JWT is published for Scala 2.12. Add the following to your `build.sbt`:
 
 ```
 resolvers += Resolver.bintrayRepo("gn0s1s", "releases")

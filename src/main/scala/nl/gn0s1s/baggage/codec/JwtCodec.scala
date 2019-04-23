@@ -5,14 +5,15 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.util.Base64
 import scala.util.Try
 
-import co.blocke.scalajack.{ Reader, ScalaJack, TokenType, Writer }
-import co.blocke.scalajack.typeadapter.BasicTypeAdapter
+import co.blocke.scalajack._
+import co.blocke.scalajack.model.{ Reader, Stringish, TypeAdapter, Writer }
+import co.blocke.scalajack.util.Path
 
 import algorithm.Algorithm
 import claim.ClaimsSet._
 
 object JwtCodec {
-  private val sj = ScalaJack[String]().withAdapters(AlgorithmAdapter)
+  private val sj = ScalaJack().withAdapters(AlgorithmAdapter)
 
   def encodeHeader(header: JoseHeader): Try[String] = {
     Try(new String(Base64.getUrlEncoder.withoutPadding.encode(sj.render(header).getBytes(UTF_8))))
@@ -35,15 +36,15 @@ object JwtCodec {
   }
 }
 
-object AlgorithmAdapter extends BasicTypeAdapter[Algorithm] {
-  override def read(reader: Reader): Algorithm = {
-    reader.peek match {
-      case TokenType.String =>
-        Algorithm(reader.readString).getOrElse(throw new Exception("invalid algorithm specified"))
+object AlgorithmAdapter extends TypeAdapter.===[Algorithm] with Stringish {
+  def read[WIRE](path: Path, reader: Reader[WIRE], isMapKey: Boolean): Algorithm =
+    reader.readString(path) match {
+      case s: String =>
+        Algorithm(s).getOrElse(throw new Exception("invalid algorithm specified"))
       case _ =>
         throw new Exception("invalid algorithm specified")
     }
-  }
-  override def write(value: Algorithm, writer: Writer): Unit =
-    writer.writeString(value.toString)
+
+  def write[WIRE](alg: Algorithm, writer: Writer[WIRE], out: scala.collection.mutable.Builder[WIRE, WIRE], isMapKey: Boolean): Unit =
+    writer.writeString(alg.toString, out)
 }
