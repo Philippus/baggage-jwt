@@ -1,12 +1,12 @@
 name := "baggage-jwt"
 organization := "nl.gn0s1s"
-version := "0.2.0"
+version := "0.3.0"
 startYear := Some(2017)
 homepage := Some(url("https://github.com/philippus/baggage-jwt"))
 licenses += ("BSD 3-Clause", url("http://opensource.org/licenses/BSD-3-Clause"))
 
-crossScalaVersions := List("2.12.8")
-scalaVersion := crossScalaVersions.value.last
+crossScalaVersions := List("2.12.8", "2.13.0-RC1")
+scalaVersion := crossScalaVersions.value.head
 
 bintrayOrganization := Some("gn0s1s")
 bintrayRepository := "releases"
