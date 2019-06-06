@@ -5,7 +5,7 @@ startYear := Some(2017)
 homepage := Some(url("https://github.com/philippus/baggage-jwt"))
 licenses += ("BSD 3-Clause", url("http://opensource.org/licenses/BSD-3-Clause"))
 
-crossScalaVersions := List("2.12.8", "2.13.0-RC1")
+crossScalaVersions := List("2.12.8", "2.13.0-RC3")
 scalaVersion := crossScalaVersions.value.head
 
 bintrayOrganization := Some("gn0s1s")
@@ -14,7 +14,7 @@ bintrayRepository := "releases"
 useJCenter := true
 
 libraryDependencies ++= Seq(
-  "co.blocke" %% "scalajack" % "6.0.1",
+  "co.blocke" %% "scalajack" % "6.0.2",
   "org.scalacheck" %% "scalacheck" % "1.14.0" % Test
 )
 
