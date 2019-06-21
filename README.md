@@ -2,19 +2,19 @@
 
 [![Build Status](https://travis-ci.org/Philippus/baggage-jwt.svg?branch=master)](https://travis-ci.org/Philippus/baggage-jwt)
 [![codecov](https://codecov.io/gh/Philippus/baggage-jwt/branch/master/graph/badge.svg)](https://codecov.io/gh/Philippus/baggage-jwt)
-![Current Version](https://img.shields.io/badge/version-0.3.0-brightgreen.svg?style=flat "0.3.0")
+![Current Version](https://img.shields.io/badge/version-0.3.1-brightgreen.svg?style=flat "0.3.1")
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=flat "BSD 3-Clause")](LICENSE.md)
 
 Baggage JWT is an implementation of [RFC 7519](https://tools.ietf.org/html/rfc7519) in Scala that tries to follow the
 specification closely.
 
 ## Installation
-Baggage JWT is published for Scala 2.12 and 2.13.0-RC1. Add the following to your `build.sbt`:
+Baggage JWT is published for Scala 2.12 and 2.13. Add the following to your `build.sbt`:
 
 ```
 resolvers += Resolver.bintrayRepo("gn0s1s", "releases")
 
-libraryDependencies += "nl.gn0s1s" %% "baggage-jwt" % "0.3.0"
+libraryDependencies += "nl.gn0s1s" %% "baggage-jwt" % "0.3.1"
 ```
 
 ## JWT
