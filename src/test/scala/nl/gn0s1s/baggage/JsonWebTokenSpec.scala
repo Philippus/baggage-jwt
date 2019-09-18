@@ -3,7 +3,7 @@ package nl.gn0s1s.baggage
 import scala.util.{ Failure, Success }
 
 import org.scalacheck._
-import org.scalacheck.Prop.{ forAll, BooleanOperators }
+import org.scalacheck.Prop.{ forAll, propBoolean }
 
 import algorithm._
 import claim._
