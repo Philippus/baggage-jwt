@@ -4,7 +4,7 @@ import java.time.{ Duration, LocalDateTime, ZoneOffset }
 import scala.util.Failure
 
 import org.scalacheck._
-import org.scalacheck.Prop.{ forAll, BooleanOperators }
+import org.scalacheck.Prop.{ forAll, propBoolean }
 
 import claim._
 

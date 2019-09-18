@@ -1,7 +1,7 @@
 package nl.gn0s1s.baggage
 
 import org.scalacheck._
-import org.scalacheck.Prop.{ forAll, BooleanOperators }
+import org.scalacheck.Prop.{ forAll, propBoolean }
 
 import algorithm._
 import codec.JwtCodec.encodeSignature
