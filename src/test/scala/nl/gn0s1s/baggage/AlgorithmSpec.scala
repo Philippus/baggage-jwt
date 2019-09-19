@@ -44,7 +44,8 @@ object AlgorithmSpec extends Properties("Algorithm") {
 
   propertyWithSeed("verifying fails if key is invalid", None) = forAll {
     (alg: Algorithm, data: String, key: Key, verificationKey: Key) =>
-      (!key.value.sameElements(verificationKey.value) && key.value.nonEmpty && verificationKey.value.nonEmpty && alg != NoneAlgorithm) ==>
+      (!key.value.sameElements(verificationKey.value) && key.value.nonEmpty && verificationKey.value.nonEmpty && alg != NoneAlgorithm &&
+        !alg.sign(data, key).get.sameElements(alg.sign(data, verificationKey).get)) ==>
         !alg.verify(data, verificationKey, encodeSignature(alg.sign(data, key).get).get)
   }
 
