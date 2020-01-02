@@ -6,8 +6,7 @@ import java.util.Base64
 import scala.util.Try
 
 import co.blocke.scalajack._
-import co.blocke.scalajack.model.{ Reader, Stringish, TypeAdapter, Writer }
-import co.blocke.scalajack.util.Path
+import co.blocke.scalajack.model.{ Parser, Stringish, TypeAdapter, Writer }
 
 import algorithm.Algorithm
 import claim.ClaimsSet._
@@ -37,14 +36,14 @@ object JwtCodec {
 }
 
 object AlgorithmAdapter extends TypeAdapter.===[Algorithm] with Stringish {
-  def read[WIRE](path: Path, reader: Reader[WIRE], isMapKey: Boolean): Algorithm =
-    reader.readString(path) match {
+  def read(parser: Parser): Algorithm =
+    parser.expectString() match {
       case s: String =>
         Algorithm(s).getOrElse(throw new Exception("invalid algorithm specified"))
       case _ =>
         throw new Exception("invalid algorithm specified")
     }
 
-  def write[WIRE](alg: Algorithm, writer: Writer[WIRE], out: scala.collection.mutable.Builder[WIRE, WIRE], isMapKey: Boolean): Unit =
+  def write[WIRE](alg: Algorithm, writer: Writer[WIRE], out: scala.collection.mutable.Builder[WIRE, WIRE]): Unit =
     writer.writeString(alg.toString, out)
 }
