@@ -1,6 +1,6 @@
 # Baggage JWT
 
-[![Build Status](https://travis-ci.org/Philippus/baggage-jwt.svg?branch=master)](https://travis-ci.org/Philippus/baggage-jwt)
+![build](https://github.com/Philippus/baggage-jwt/workflows/build/badge.svg)
 [![codecov](https://codecov.io/gh/Philippus/baggage-jwt/branch/master/graph/badge.svg)](https://codecov.io/gh/Philippus/baggage-jwt)
 ![Current Version](https://img.shields.io/badge/version-0.3.1-brightgreen.svg?style=flat "0.3.1")
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg?style=flat "BSD 3-Clause")](LICENSE.md)
