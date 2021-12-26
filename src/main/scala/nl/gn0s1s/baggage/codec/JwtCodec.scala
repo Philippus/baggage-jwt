@@ -6,7 +6,7 @@ import java.util.Base64
 import scala.util.Try
 
 import co.blocke.scalajack._
-import co.blocke.scalajack.model.{ Parser, Stringish, TypeAdapter, Writer }
+import co.blocke.scalajack.model.{Parser, Stringish, TypeAdapter, Writer}
 
 import algorithm.Algorithm
 import claim.ClaimsSet._

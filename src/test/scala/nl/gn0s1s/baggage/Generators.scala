@@ -1,6 +1,6 @@
 package nl.gn0s1s.baggage
 
-import org.scalacheck.{ Arbitrary, Gen }
+import org.scalacheck.{Arbitrary, Gen}
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.Gen.oneOf
 
