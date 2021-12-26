@@ -49,6 +49,10 @@ object JsonWebToken {
     for {
       jwt <- JsonWebToken(jwtString)
       header <- decodeHeader(jwt.encodedHeader)
-    } yield header.alg == alg && alg.verify(s"${jwt.encodedHeader}.${jwt.encodedPayload}", secretKey, jwt.encodedSignature)
+    } yield header.alg == alg && alg.verify(
+      s"${jwt.encodedHeader}.${jwt.encodedPayload}",
+      secretKey,
+      jwt.encodedSignature
+    )
   }.getOrElse(false)
 }

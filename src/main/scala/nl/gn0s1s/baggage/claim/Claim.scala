@@ -24,7 +24,9 @@ abstract class RegisteredClaim(name: String, value: Any) extends Claim(name, val
 
 case class IssuerClaim(override val value: String) extends RegisteredClaim("iss", value) with StringOrUri // stringOrURI
 
-case class SubjectClaim(override val value: String) extends RegisteredClaim("sub", value) with StringOrUri // stringOrURI
+case class SubjectClaim(override val value: String)
+    extends RegisteredClaim("sub", value)
+    with StringOrUri // stringOrURI
 
 case class AudienceClaim(override val value: Any) extends RegisteredClaim("aud", value) { // stringOrUri or array of stringOrUri
   def isValid: Boolean = {
@@ -32,20 +34,27 @@ case class AudienceClaim(override val value: Any) extends RegisteredClaim("aud",
 
     value match {
       case s: String => stringOrUri(s)
-      case l: List[Any] => l.forall({
-        case s: String => stringOrUri(s)
-        case _ => false
-      })
+      case l: List[Any] =>
+        l.forall({
+          case s: String => stringOrUri(s)
+          case _ => false
+        })
       case _ => false
     }
   }
 }
 
-case class ExpirationTimeClaim(override val value: Long) extends RegisteredClaim("exp", value) with NumericDate // number containing NumericDate
+case class ExpirationTimeClaim(override val value: Long)
+    extends RegisteredClaim("exp", value)
+    with NumericDate // number containing NumericDate
 
-case class NotBeforeClaim(override val value: Long) extends RegisteredClaim("nbf", value) with NumericDate // number containing NumericDate
+case class NotBeforeClaim(override val value: Long)
+    extends RegisteredClaim("nbf", value)
+    with NumericDate // number containing NumericDate
 
-case class IssuedAtClaim(override val value: Long) extends RegisteredClaim("iat", value) with NumericDate // number containing NumericDate
+case class IssuedAtClaim(override val value: Long)
+    extends RegisteredClaim("iat", value)
+    with NumericDate // number containing NumericDate
 
 case class JwtIdClaim(override val value: String) extends RegisteredClaim("jti", value) { // string
   def isValid = true
@@ -97,7 +106,8 @@ object Claim {
     "sip_via_branch",
     "orig",
     "dest",
-    "mky")
+    "mky"
+  )
 
   def apply(name: String, value: Any): Claim = {
     (name, value) match {
@@ -109,7 +119,8 @@ object Claim {
       case ("nbf", i: Int) => NotBeforeClaim(i.toLong)
       case ("iat", i: Int) => IssuedAtClaim(i.toLong)
       case ("jti", s: String) => JwtIdClaim(s)
-      case (name, v) if RegisteredClaimNames.contains(name) => throw new IllegalArgumentException(s"wrong type ${v.getClass} for value of ${name}")
+      case (name, v) if RegisteredClaimNames.contains(name) =>
+        throw new IllegalArgumentException(s"wrong type ${v.getClass} for value of ${name}")
       case (name, v) if PublicClaimNames.contains(name) => PublicClaim(name, v)
       case (name, v) => PrivateClaim(name, v)
     }

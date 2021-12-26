@@ -24,10 +24,12 @@ object ClaimsProcessor {
 
   // check if expected audience claim value is present in supplied set of claims
   def checkAudienceClaim(claims: ClaimsSet, audienceClaim: Option[Claim]): Try[ClaimsSet] = {
-    val checkAudienceClaim = claims.filter(_.name == "aud").forall(_.value match {
-      case l: List[Any] => l.exists(x => audienceClaim.exists(_.value == x))
-      case x => audienceClaim.exists(_.value == x)
-    })
+    val checkAudienceClaim = claims
+      .filter(_.name == "aud")
+      .forall(_.value match {
+        case l: List[Any] => l.exists(x => audienceClaim.exists(_.value == x))
+        case x => audienceClaim.exists(_.value == x)
+      })
 
     if (checkAudienceClaim)
       Success(claims)
@@ -38,11 +40,13 @@ object ClaimsProcessor {
   def checkExpirationTimeClaim(claims: ClaimsSet, clockSkew: Duration): Try[ClaimsSet] = {
     val current = LocalDateTime.now()
 
-    val checkExpirationTimeClaim = claims.filter(_.name == "exp").forall(_.value match {
-      case l: Long =>
-        val expirationTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(l), ZoneOffset.UTC)
-        current.isBefore(expirationTime.plus(clockSkew))
-    })
+    val checkExpirationTimeClaim = claims
+      .filter(_.name == "exp")
+      .forall(_.value match {
+        case l: Long =>
+          val expirationTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(l), ZoneOffset.UTC)
+          current.isBefore(expirationTime.plus(clockSkew))
+      })
 
     if (checkExpirationTimeClaim)
       Success(claims)
@@ -54,11 +58,13 @@ object ClaimsProcessor {
   def checkNotBeforeClaim(claims: ClaimsSet, clockSkew: Duration): Try[ClaimsSet] = {
     val current = LocalDateTime.now()
 
-    val checkNotBeforeClaim = claims.filter(_.name == "nbf").forall(_.value match {
-      case l: Long =>
-        val notBeforeTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(l), ZoneOffset.UTC)
-        !current.isBefore(notBeforeTime.minus(clockSkew))
-    })
+    val checkNotBeforeClaim = claims
+      .filter(_.name == "nbf")
+      .forall(_.value match {
+        case l: Long =>
+          val notBeforeTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(l), ZoneOffset.UTC)
+          !current.isBefore(notBeforeTime.minus(clockSkew))
+      })
 
     if (checkNotBeforeClaim)
       Success(claims)
@@ -66,7 +72,12 @@ object ClaimsProcessor {
       Failure(new IllegalArgumentException("Token not valid yet"))
   }
 
-  def process(claims: ClaimsSet, reqClaimNames: Set[String], expectedClaims: ClaimsSet, clockSkew: Duration): Try[ClaimsSet] = {
+  def process(
+      claims: ClaimsSet,
+      reqClaimNames: Set[String],
+      expectedClaims: ClaimsSet,
+      clockSkew: Duration
+  ): Try[ClaimsSet] = {
     for {
       claims <- checkRequiredClaims(claims, reqClaimNames)
       claims <- checkExpectedClaims(claims, expectedClaims.filterNot(_.name == "aud"))
