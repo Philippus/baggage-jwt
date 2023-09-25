@@ -40,7 +40,7 @@ object JsonWebTokenSpec extends Properties("JsonWebToken") {
   property("apply only works for at least two parts") = {
     JsonWebToken("a.") match {
       case Failure(_: IllegalArgumentException) => true
-      case _ => false
+      case _                                    => false
     }
   }
 
@@ -55,7 +55,7 @@ object JsonWebTokenSpec extends Properties("JsonWebToken") {
           ExpirationTimeClaim(1300819380),
           PrivateClaim("http://example.com/is_root", true)
         )
-      case Failure(_) => false
+      case Failure(_)                   => false
     }
   }
 
@@ -70,7 +70,7 @@ object JsonWebTokenSpec extends Properties("JsonWebToken") {
           ExpirationTimeClaim(1300819380),
           PrivateClaim("http://example.com/is_root", true)
         )
-      case Failure(_) => false
+      case Failure(_)                   => false
     }
   }
 
@@ -86,7 +86,7 @@ object JsonWebTokenSpec extends Properties("JsonWebToken") {
           PrivateClaim("qsh", "8063ff4ca1e41df7bc90c8ab6d0f6207d491cf6dad7c66ea797b4614b71922e9"),
           IssuedAtClaim(1386898951)
         )
-      case Failure(_) => false
+      case Failure(_)                   => false
     }
   }
 
@@ -101,7 +101,7 @@ object JsonWebTokenSpec extends Properties("JsonWebToken") {
           PublicClaim("name", "John Doe"),
           PrivateClaim("admin", true)
         )
-      case Failure(_) => false
+      case Failure(_)                   => false
     }
   }
 
@@ -112,7 +112,7 @@ object JsonWebTokenSpec extends Properties("JsonWebToken") {
     JsonWebToken(exampleFromAuthentikat).map(_.decode).get match {
       case Success((header, claims, _)) =>
         header == JoseHeader(HS256, Some("JWT"), None) && claims == Set(PrivateClaim("Hey", "foo"))
-      case Failure(_) => false
+      case Failure(_)                   => false
     }
   }
 }

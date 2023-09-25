@@ -12,14 +12,14 @@ import codec.JwtCodec
 abstract class HmacShaAlgorithm(algorithmString: String) extends Algorithm {
   def sign(data: String, key: Key): Try[Array[Byte]] = Try {
     val secretKey = new SecretKeySpec(key.value, algorithmString)
-    val mac = Mac.getInstance(algorithmString)
+    val mac       = Mac.getInstance(algorithmString)
     mac.init(secretKey)
     mac.doFinal(data.getBytes(UTF_8))
   }
 
   def verify(data: String, key: Key, providedSignature: String): Boolean = {
     for {
-      signature <- sign(data, key)
+      signature        <- sign(data, key)
       encodedSignature <- JwtCodec.encodeSignature(signature)
     } yield MessageDigest.isEqual(encodedSignature.getBytes, providedSignature.getBytes) // prevent timing attacks
   }.getOrElse(false)
