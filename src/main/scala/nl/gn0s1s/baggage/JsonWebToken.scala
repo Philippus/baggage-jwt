@@ -20,9 +20,9 @@ case class JsonWebToken(encodedHeader: String, encodedPayload: String, encodedSi
 object JsonWebToken {
   def apply(header: JoseHeader, claims: ClaimsSet, secretKey: Key): Try[JsonWebToken] = {
     for {
-      encodedHeader <- encodeHeader(header)
-      encodedPayload <- encodePayload(claims)
-      signature <- header.alg.sign(s"$encodedHeader.$encodedPayload", secretKey)
+      encodedHeader    <- encodeHeader(header)
+      encodedPayload   <- encodePayload(claims)
+      signature        <- header.alg.sign(s"$encodedHeader.$encodedPayload", secretKey)
       encodedSignature <- encodeSignature(signature)
     } yield JsonWebToken(encodedHeader, encodedPayload, encodedSignature)
   }
@@ -47,7 +47,7 @@ object JsonWebToken {
 
   def validate(jwtString: String, alg: Algorithm, secretKey: Key): Boolean = {
     for {
-      jwt <- JsonWebToken(jwtString)
+      jwt    <- JsonWebToken(jwtString)
       header <- decodeHeader(jwt.encodedHeader)
     } yield header.alg == alg && alg.verify(
       s"${jwt.encodedHeader}.${jwt.encodedPayload}",

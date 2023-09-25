@@ -28,7 +28,7 @@ object ClaimsProcessor {
       .filter(_.name == "aud")
       .forall(_.value match {
         case l: List[Any] => l.exists(x => audienceClaim.exists(_.value == x))
-        case x => audienceClaim.exists(_.value == x)
+        case x            => audienceClaim.exists(_.value == x)
       })
 
     if (checkAudienceClaim)

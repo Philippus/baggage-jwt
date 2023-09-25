@@ -12,7 +12,7 @@ object AlgorithmSpec extends Properties("Algorithm") {
     !List(NoneAlgorithm, HS256, HS384, HS512).map(_.toString).contains(a) ==> {
       Algorithm(a) match {
         case Some(_) => false
-        case None => true
+        case None    => true
       }
     }
   }

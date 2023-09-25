@@ -21,12 +21,12 @@ object Generators {
   implicit val arbitraryJoseHeader: Arbitrary[JoseHeader] = Arbitrary(genJoseHeader)
 
   def genRegisteredClaim: Gen[Claim] = for {
-    claimName <- oneOf(List("iss", "sub", "aud", "exp", "nbf", "iat", "jti"))
+    claimName  <- oneOf(List("iss", "sub", "aud", "exp", "nbf", "iat", "jti"))
     claimValue <- claimName match {
-      case "iss" | "sub" | "jti" => Gen.alphaStr
-      case "aud" => Gen.frequency((4, Gen.alphaStr), (1, Gen.listOf(Gen.alphaStr)))
-      case "exp" | "nbf" | "iat" => Gen.posNum[Int]
-    }
+                    case "iss" | "sub" | "jti" => Gen.alphaStr
+                    case "aud"                 => Gen.frequency((4, Gen.alphaStr), (1, Gen.listOf(Gen.alphaStr)))
+                    case "exp" | "nbf" | "iat" => Gen.posNum[Int]
+                  }
   } yield Claim(claimName, claimValue)
 
   def genKey: Gen[Key] = for {

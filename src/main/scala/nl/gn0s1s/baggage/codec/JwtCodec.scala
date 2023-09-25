@@ -40,7 +40,7 @@ object AlgorithmAdapter extends TypeAdapter.===[Algorithm] with Stringish {
     parser.expectString() match {
       case s: String =>
         Algorithm(s).getOrElse(throw new Exception("invalid algorithm specified"))
-      case _ =>
+      case _         =>
         throw new Exception("invalid algorithm specified")
     }
 

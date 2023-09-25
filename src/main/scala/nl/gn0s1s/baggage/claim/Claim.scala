@@ -33,13 +33,13 @@ case class AudienceClaim(override val value: Any) extends RegisteredClaim("aud",
     def stringOrUri(value: String): Boolean = !value.exists(_ == ':') || Try(new URI(value)).isSuccess
 
     value match {
-      case s: String => stringOrUri(s)
+      case s: String    => stringOrUri(s)
       case l: List[Any] =>
         l.forall({
           case s: String => stringOrUri(s)
-          case _ => false
+          case _         => false
         })
-      case _ => false
+      case _            => false
     }
   }
 }
@@ -70,7 +70,7 @@ case class PrivateClaim(override val name: String, override val value: Any) exte
 
 object Claim {
   val RegisteredClaimNames = List("iss", "sub", "aud", "exp", "nbf", "iat", "jti")
-  val PublicClaimNames = List(
+  val PublicClaimNames     = List(
     "name",
     "given_name",
     "family_name",
@@ -111,18 +111,18 @@ object Claim {
 
   def apply(name: String, value: Any): Claim = {
     (name, value) match {
-      case ("iss", s: String) => IssuerClaim(s)
-      case ("sub", s: String) => SubjectClaim(s)
-      case ("aud", s: String) => AudienceClaim(s)
-      case ("aud", l: List[Any]) => AudienceClaim(l)
-      case ("exp", i: Int) => ExpirationTimeClaim(i.toLong)
-      case ("nbf", i: Int) => NotBeforeClaim(i.toLong)
-      case ("iat", i: Int) => IssuedAtClaim(i.toLong)
-      case ("jti", s: String) => JwtIdClaim(s)
+      case ("iss", s: String)                               => IssuerClaim(s)
+      case ("sub", s: String)                               => SubjectClaim(s)
+      case ("aud", s: String)                               => AudienceClaim(s)
+      case ("aud", l: List[Any])                            => AudienceClaim(l)
+      case ("exp", i: Int)                                  => ExpirationTimeClaim(i.toLong)
+      case ("nbf", i: Int)                                  => NotBeforeClaim(i.toLong)
+      case ("iat", i: Int)                                  => IssuedAtClaim(i.toLong)
+      case ("jti", s: String)                               => JwtIdClaim(s)
       case (name, v) if RegisteredClaimNames.contains(name) =>
         throw new IllegalArgumentException(s"wrong type ${v.getClass} for value of ${name}")
-      case (name, v) if PublicClaimNames.contains(name) => PublicClaim(name, v)
-      case (name, v) => PrivateClaim(name, v)
+      case (name, v) if PublicClaimNames.contains(name)     => PublicClaim(name, v)
+      case (name, v)                                        => PrivateClaim(name, v)
     }
   }
 }
