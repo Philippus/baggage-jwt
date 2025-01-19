@@ -28,7 +28,9 @@ case class SubjectClaim(override val value: String)
     extends RegisteredClaim("sub", value)
     with StringOrUri // stringOrURI
 
-case class AudienceClaim(override val value: Any) extends RegisteredClaim("aud", value) { // stringOrUri or array of stringOrUri
+case class AudienceClaim(
+    override val value: Any
+) extends RegisteredClaim("aud", value) { // stringOrUri or array of stringOrUri
   def isValid: Boolean = {
     def stringOrUri(value: String): Boolean = !value.exists(_ == ':') || Try(new URI(value)).isSuccess
 
