@@ -18,7 +18,7 @@ ThisBuild / versionPolicyIntention := Compatibility.None
 
 Compile / packageBin / packageOptions += Package.ManifestAttributes("Automatic-Module-Name" -> "nl.gn0s1s.baggage")
 
-crossScalaVersions := List("2.13.15")
+crossScalaVersions := List("2.13.16")
 scalaVersion       := crossScalaVersions.value.last
 
 useJCenter := true
