@@ -21,8 +21,6 @@ Compile / packageBin / packageOptions += Package.ManifestAttributes("Automatic-M
 crossScalaVersions := List("2.13.18")
 scalaVersion       := crossScalaVersions.value.last
 
-useJCenter := true
-
 libraryDependencies ++= Seq(
   "co.blocke"      %% "scalajack"  % "6.2.0",
   "org.scalacheck" %% "scalacheck" % "1.19.0" % Test
