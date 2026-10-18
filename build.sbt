@@ -18,7 +18,7 @@ ThisBuild / versionPolicyIntention := Compatibility.None
 
 Compile / packageBin / packageOptions += Package.ManifestAttributes("Automatic-Module-Name" -> "nl.gn0s1s.baggage")
 
-crossScalaVersions := List("2.13.18")
+crossScalaVersions := List("3.10.0")
 scalaVersion       := crossScalaVersions.value.last
 
 libraryDependencies ++= Seq(
